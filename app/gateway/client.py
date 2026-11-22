@@ -1,8 +1,6 @@
 from langchain_openai import ChatOpenAI
 from openai import OpenAI
-
 from app.config import settings
-
 
 # LiteLLM model alias
 # Actual provider models and fallback are configured in litellm_config.yaml.

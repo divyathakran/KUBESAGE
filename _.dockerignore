@@ -1,0 +1,11 @@
+.git
+.venv
+__pycache__
+*.pyc
+.env
+.env.*
+.streamlit/secrets.toml
+evals
+notebooks
+*.ipynb
+*.txt.bak

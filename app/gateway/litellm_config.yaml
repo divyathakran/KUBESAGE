@@ -6,7 +6,7 @@ model_list:
 
   - model_name: rag-fallback
     litellm_params:
-      model: groq/openai/gpt-oss-20b    # or a different model, e.g. groq/llama-3.1-8b-instant
+      model: groq/openai/gpt-oss-20b    # or a different mode
       api_key: os.environ/GROQ_FALLBACK_API_KEY
   
   - model_name: rag-guard

@@ -1,0 +1,10 @@
+services:
+  kubesage:
+    build: .
+    container_name: kubesage
+    restart: unless-stopped
+    # Secrets live in a .env file ON THE SERVER, never in git or in the image
+    env_file: .env
+    ports:
+      # Only the Streamlit UI is published. Do NOT publish 8000 or 4000.
+      - "8501:8501"
