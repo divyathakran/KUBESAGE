@@ -1,0 +1,43 @@
+model_list:
+  - model_name: rag-primary
+    litellm_params:
+      model: groq/openai/gpt-oss-120b    # use the same model you used with Portkey
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: rag-fallback
+    litellm_params:
+      model: groq/openai/gpt-oss-20b    # or a different model, e.g. groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_FALLBACK_API_KEY
+  
+  - model_name: rag-guard
+    litellm_params:
+      model: groq/openai/gpt-oss-20b   # any small NON-reasoning model on your Groq account
+      api_key: os.environ/GROQ_FALLBACK_API_KEY
+      temperature: 0
+      reasoning_effort: low
+      max_tokens: 300
+
+router_settings:
+  num_retries: 2                 # retries on 429/503 etc. (like your Portkey retry config)
+  timeout: 30
+  fallbacks: [{"rag-primary": ["rag-fallback"]}]
+  allowed_fails: 3
+  cooldown_time: 30              # seconds a failing deployment is skipped
+
+#litellm_settings:
+#   cache: true
+#   cache_params:
+#   type: local                  # in-memory, fine for dev. Use redis for production (see below)
+#   ttl: 3600
+
+litellm_settings:
+  cache: true
+  cache_params:
+    type: redis
+    host: os.environ/REDIS_HOST
+    port: os.environ/REDIS_PORT
+    password: os.environ/REDIS_PASSWORD
+    ssl: true
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
